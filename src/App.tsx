@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
 
-const GRAVITY = 0.6
+const GRAVITY = 0.4
 const JUMP_HEIGHT = -8
-const PIPE_SPEED = 3.5
-const PIPE_SPAWN_RATE = 1500 // ms
+const PIPE_SPEED = 2.5
+const PIPE_SPAWN_RATE = 1800 // ms
 const PIPE_WIDTH = 60
 const BIRD_SIZE = 60
 const GAME_WIDTH = 400
 const GAME_HEIGHT = 700
-const GAP_SIZE = 200
+const GAP_SIZE = 240
 
 interface PipeData {
   id: number
@@ -111,7 +111,7 @@ function App() {
           pipe.passed = true
           setScore(s => {
             const newScore = s + 1
-            if (newScore === 5) {
+            if (newScore === 10) {
               setShowValentine(true)
             }
             return newScore
