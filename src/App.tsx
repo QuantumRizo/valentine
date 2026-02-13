@@ -111,7 +111,7 @@ function App() {
           pipe.passed = true
           setScore(s => {
             const newScore = s + 1
-            if (newScore === 10) {
+            if (newScore === 6) {
               setShowValentine(true)
             }
             return newScore
