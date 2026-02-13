@@ -1,0 +1,187 @@
+.game-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  max-height: 700px;
+  background: linear-gradient(to bottom, #4ec0ca 0%, #4ec0ca 100%);
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+}
+
+.bird {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  transition: transform 0.1s;
+  z-index: 10;
+}
+
+.pipe {
+  position: absolute;
+  background-color: #2e8b57;
+  border: 4px solid #1e5e3b;
+  width: 60px;
+  z-index: 5;
+}
+
+.score {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+
+.game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  color: #333;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  z-index: 30;
+}
+
+.game-over h2 {
+  margin: 0 0 15px;
+  font-size: 32px;
+  color: #ff4757;
+}
+
+.game-over button {
+  background: #2ed573;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.game-over button:hover {
+  transform: scale(1.05);
+}
+
+.start-screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+  color: white;
+  z-index: 30;
+}
+
+.start-screen h1 {
+  font-size: 40px;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.instructions {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 50px;
+  margin-top: 20px;
+}
+
+.valentine-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 105, 180, 0.4);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.valentine-content {
+  background: white;
+  padding: 30px;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-width: 80%;
+  border: 4px solid #ff4757;
+  animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.valentine-content h2 {
+  color: #ff4757;
+  font-size: 28px;
+  margin: 15px 0;
+}
+
+.valentine-content .hearts {
+  font-size: 40px;
+  animation: heartbeat 1.2s infinite;
+}
+
+.valentine-content button {
+  background: #ff4757;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
