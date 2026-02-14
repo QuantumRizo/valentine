@@ -7,8 +7,6 @@ const PIPE_SPEED = 2.5
 const PIPE_SPAWN_RATE = 1800 // ms
 const PIPE_WIDTH = 60
 const BIRD_SIZE = 60
-const GAME_WIDTH = 400
-const GAME_HEIGHT = 700
 const GAP_SIZE = 240
 
 interface PipeData {
@@ -19,6 +17,10 @@ interface PipeData {
 }
 
 function App() {
+  const [gameDimensions, setGameDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  })
   const [birdPos, setBirdPos] = useState({ x: 50, y: 250 })
   const [birdVelocity, setBirdVelocity] = useState(0)
   const [pipes, setPipes] = useState<PipeData[]>([])
@@ -29,8 +31,20 @@ function App() {
   const gameLoopRef = useRef<number | null>(null)
   const lastPipeSpawnRef = useRef<number>(0)
 
+  useEffect(() => {
+    const handleResize = () => {
+      setGameDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      })
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   const startGame = () => {
-    setBirdPos({ x: 50, y: 250 })
+    setBirdPos({ x: 50, y: gameDimensions.height / 2 })
     setBirdVelocity(0)
     setPipes([])
     setScore(0)
@@ -64,7 +78,7 @@ function App() {
       const newY = prev.y + birdVelocity
 
       // Collision with floor or ceiling
-      if (newY < 0 || newY > GAME_HEIGHT - BIRD_SIZE) {
+      if (newY < 0 || newY > gameDimensions.height - BIRD_SIZE) {
         setGameState('GAME_OVER')
         return prev
       }
@@ -76,12 +90,12 @@ function App() {
     // Spawn pipes
     if (time - lastPipeSpawnRef.current > PIPE_SPAWN_RATE) {
       const minPipeHeight = 50
-      const maxPipeHeight = GAME_HEIGHT - GAP_SIZE - minPipeHeight
+      const maxPipeHeight = gameDimensions.height - GAP_SIZE - minPipeHeight
       const topHeight = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight + 1)) + minPipeHeight
 
       setPipes(prev => [
         ...prev,
-        { id: Date.now(), x: GAME_WIDTH, topHeight, passed: false }
+        { id: Date.now(), x: gameDimensions.width, topHeight, passed: false }
       ])
       lastPipeSpawnRef.current = time
     }
@@ -97,7 +111,7 @@ function App() {
         // Collision detection
         const birdRect = { left: 50, right: 50 + BIRD_SIZE, top: birdPos.y, bottom: birdPos.y + BIRD_SIZE }
         const pipeRectTop = { left: pipe.x, right: pipe.x + PIPE_WIDTH, top: 0, bottom: pipe.topHeight }
-        const pipeRectBottom = { left: pipe.x, right: pipe.x + PIPE_WIDTH, top: pipe.topHeight + GAP_SIZE, bottom: GAME_HEIGHT }
+        const pipeRectBottom = { left: pipe.x, right: pipe.x + PIPE_WIDTH, top: pipe.topHeight + GAP_SIZE, bottom: gameDimensions.height }
 
         if (
           (birdRect.right > pipeRectTop.left && birdRect.left < pipeRectTop.right && birdRect.top < pipeRectTop.bottom) ||
@@ -123,7 +137,7 @@ function App() {
     })
 
     gameLoopRef.current = requestAnimationFrame(update)
-  }, [gameState, birdVelocity, birdPos.y])
+  }, [gameState, birdVelocity, birdPos.y, gameDimensions])
 
   useEffect(() => {
     if (gameState === 'PLAYING') {
@@ -173,7 +187,7 @@ function App() {
             style={{
               left: pipe.x,
               top: pipe.topHeight + GAP_SIZE,
-              height: GAME_HEIGHT - pipe.topHeight - GAP_SIZE,
+              height: gameDimensions.height - pipe.topHeight - GAP_SIZE,
               borderTopLeftRadius: '8px',
               borderTopRightRadius: '8px'
             }}
