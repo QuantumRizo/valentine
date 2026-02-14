@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
 
-const GRAVITY = 0.4
+const GRAVITY = 0.35
 const JUMP_HEIGHT = -8
 const PIPE_SPEED = 2.5
 const PIPE_SPAWN_RATE = 1800 // ms
