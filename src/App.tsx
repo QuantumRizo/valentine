@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
 
-const GRAVITY = 0.35
+const GRAVITY = 0.3
 const JUMP_HEIGHT = -8
 const PIPE_SPEED = 2.5
 const PIPE_SPAWN_RATE = 1800 // ms
@@ -111,7 +111,7 @@ function App() {
           pipe.passed = true
           setScore(s => {
             const newScore = s + 1
-            if (newScore === 6) {
+            if (newScore === 5) {
               setShowValentine(true)
             }
             return newScore
